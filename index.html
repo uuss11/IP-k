@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>عرض عنوان الـ IP</title>
+  <style>
+    :root{
+      --bg:#0b1220; --card:#0f1724; --accent:#4ade80; --text:#e6eef8;
+      --muted:#98a0b0;
+    }
+    html,body{height:100%;margin:0;font-family:Inter, "Segoe UI", Tahoma, Arial; background:linear-gradient(180deg,#071025 0%, #071726 100%); color:var(--text)}
+    .wrap{max-width:980px;margin:40px auto;padding:20px}
+    .ip-badge{
+      display:flex;align-items:center;justify-content:space-between;
+      gap:12px;padding:16px;border-radius:12px;background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      box-shadow: 0 6px 18px rgba(2,6,23,0.6); border:1px solid rgba(255,255,255,0.03);
+    }
+    .ip-left{display:flex;gap:12px;align-items:center}
+    .dot{width:12px;height:12px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px rgba(74,222,128,0.25)}
+    h1{margin:0;font-size:18px}
+    .ip{font-weight:700;font-size:20px;letter-spacing:0.6px}
+    .meta{color:var(--muted);font-size:13px}
+    main{margin-top:18px;padding:18px;border-radius:12px;background:var(--card);border:1px solid rgba(255,255,255,0.02)}
+    .note{color:var(--muted);font-size:13px;margin-top:10px}
+    .center{display:flex;align-items:center;justify-content:center}
+    a.btn{display:inline-block;margin-top:12px;padding:8px 14px;border-radius:10px;background:transparent;color:var(--accent);border:1px solid rgba(74,222,128,0.18);text-decoration:none}
+    @media(max-width:520px){.ip{font-size:18px}.ip-badge{flex-direction:column;align-items:flex-start}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="ip-badge" id="ipCard">
+      <div class="ip-left">
+        <div class="dot" aria-hidden="true"></div>
+        <div>
+          <h1>عنوان الـ IP مالتك</h1>
+          <div class="meta">هذا العنوان اللي تشوفه المواقع او السيرفرات</div>
+        </div>
+      </div>
+      <div>
+        <div class="ip" id="ip">جاري التحميل...</div>
+        <div class="meta" id="country"></div>
+      </div>
+    </div>
+
+    <main>
+      <h2>شرح سريع</h2>
+      <p>الصفحة تجيب عنوان الـ IP العام الخاص بالزائر من خدمة خارجية (IP اللي يطلع للإنترنت). هذا ما يغيّر عنوان الزائر — فقط يعرضه.</p>
+      <p class="note">ملاحظة: إذا تستخدم VPN أو Proxy، راح يظهر الـIP الخاص بالنفق/السيرفر وهمي اللي تمرّ منه.</p>
+
+      <div class="center">
+        <a class="btn" id="refresh">تحديث الـ IP</a>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // Fetch IP info using a reliable free API. ipify gives IP; ipapi.co gives country too.
+    async function fetchIP(){
+      const ipEl = document.getElementById('ip');
+      const countryEl = document.getElementById('country');
+      ipEl.textContent = 'جاري التحميل...';
+      countryEl.textContent = '';
+
+      try {
+        // أولاً نحصل الـ IP من ipify
+        const r1 = await fetch('https://api.ipify.org?format=json', {cache: 'no-store'});
+        if(!r1.ok) throw new Error('فشل طلب IP');
+        const j1 = await r1.json();
+        const ip = j1.ip || 'غير معروف';
+
+        // بعد نجيب بيانات إضافية (بلد) من ipapi.co
+        let countryText = '';
+        try {
+          const r2 = await fetch(`https://ipapi.co/${encodeURIComponent(ip)}/country_name/`, {cache: 'no-store'});
+          if(r2.ok){
+            const c = await r2.text();
+            if(c && c.trim().length) countryText = c.trim();
+          }
+        } catch(e){ /* نكمل بدون country */ }
+
+        ipEl.textContent = ip;
+        countryEl.textContent = countryText ? ('البلد: ' + countryText) : '';
+      } catch (err) {
+        ipEl.textContent = 'ما قدرنا نجيب الـIP';
+        countryEl.textContent = String(err.message || err);
+      }
+    }
+
+    document.getElementById('refresh').addEventListener('click', fetchIP);
+    // تحميل أولي
+    fetchIP();
+  </script>
+</body>
+</html>
