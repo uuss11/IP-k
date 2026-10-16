@@ -3,72 +3,54 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#090d18" />
-  <meta name="description" content="مرصد — أدوات استطلاع دفاعية لمعلومات الشبكة العامة ونظام DNS." />
-  <title>مرصد | استخبارات الشبكة</title>
+  <meta name="theme-color" content="#071025" />
+  <meta name="description" content="اعرض عنوان IP العام الخاص باتصالك ومعلوماته التقريبية." />
+  <title>عرض عنوان IP</title>
   <style>
-    :root{color-scheme:dark;--bg:#090d18;--panel:#101725;--panel-2:#131e2e;--line:#263348;--text:#e8eef7;--muted:#95a3b7;--mint:#7bf0c5;--blue:#8ab4ff;--amber:#f2c879;--red:#ff777e;--mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;--sans:Inter,"Segoe UI",Tahoma,Arial,sans-serif}
-    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 83% -20%,#1c3650 0,transparent 40%),var(--bg);color:var(--text);font-family:var(--sans);min-height:100vh}button,input{font:inherit}button{cursor:pointer}.shell{width:min(1120px,calc(100% - 40px));margin:auto}.topbar{height:76px;border-bottom:1px solid #ffffff12;display:flex;align-items:center;justify-content:space-between}.brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--text)}.brand-mark{height:38px;width:38px;border:1px solid #7bf0c577;border-radius:12px;display:grid;place-items:center;color:var(--mint);font-size:20px;box-shadow:inset 0 0 18px #7bf0c510}.brand-name{font-weight:750;letter-spacing:.02em}.brand-sub{font-size:11px;color:var(--muted);margin-top:3px}.nav-status{display:flex;align-items:center;gap:9px;color:var(--muted);font-size:12px}.pulse{width:8px;height:8px;border-radius:50%;background:var(--mint);box-shadow:0 0 12px #7bf0c5aa}.hero{padding:70px 0 34px;max-width:770px}.eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--mint);border:1px solid #7bf0c533;background:#7bf0c50b;padding:7px 11px;border-radius:99px;font-size:12px}.hero h1{font-size:clamp(36px,6vw,62px);letter-spacing:-.045em;line-height:1.16;margin:20px 0 15px}.hero h1 span{color:var(--mint)}.hero p{color:var(--muted);font-size:16px;line-height:1.9;max-width:700px;margin:0}.workbench{border:1px solid var(--line);background:linear-gradient(145deg,#141e2d,#0e1521 70%);border-radius:18px;padding:22px;box-shadow:0 24px 70px #0004}.workbench-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:18px}.workbench-head h2{margin:0;font-size:17px}.workbench-head p{margin:7px 0 0;color:var(--muted);font-size:13px}.passive-tag{font-size:11px;color:var(--mint);white-space:nowrap;border:1px solid #7bf0c533;padding:6px 9px;border-radius:99px}.search-row{display:flex;gap:10px}.input-wrap{position:relative;flex:1}.input-wrap .symbol{position:absolute;right:15px;top:50%;transform:translateY(-50%);font-family:var(--mono);color:var(--muted)}input{width:100%;height:52px;background:#090f19;border:1px solid #2d3a4f;border-radius:11px;color:var(--text);padding:0 44px 0 14px;outline:none;direction:ltr;text-align:left;font-family:var(--mono);font-size:14px}input:focus{border-color:#7bf0c588;box-shadow:0 0 0 3px #7bf0c512}input::placeholder{color:#68778c}.primary{height:52px;padding:0 22px;border:0;border-radius:11px;background:var(--mint);color:#092019;font-weight:750;transition:transform .18s,filter .18s}.primary:hover{filter:brightness(1.08);transform:translateY(-1px)}.primary:disabled{opacity:.6;cursor:wait}.hint{margin:11px 2px 0;color:var(--muted);font-size:12px;line-height:1.7}.notice{margin-top:16px;border:1px solid #f2c87930;background:#f2c87909;color:#d9c69c;padding:12px 14px;border-radius:10px;font-size:12px;line-height:1.8}.notice strong{color:var(--amber)}.results{display:none;margin-top:18px}.results.show{display:block}.result-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}.result-title h3{font-size:14px;margin:0}.result-title span{font-size:11px;color:var(--muted)}.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.data-card{padding:14px;background:#0a111c;border:1px solid #223047;border-radius:11px;min-width:0}.data-card .label{font-size:11px;color:var(--muted);margin-bottom:9px}.data-card .value{font-size:14px;overflow-wrap:anywhere;line-height:1.5}.value.code{font-family:var(--mono);direction:ltr;text-align:right;color:var(--mint)}.value.small{font-size:12px}.error{padding:12px;border:1px solid #ff777e44;background:#ff777e0c;border-radius:10px;color:#ffb4b8;font-size:13px;line-height:1.7}.tools{padding:42px 0 70px}.section-head{display:flex;align-items:end;justify-content:space-between;gap:16px;margin-bottom:17px}.section-head h2{margin:0;font-size:20px}.section-head p{margin:0;color:var(--muted);font-size:12px}.tool-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.tool-card{display:block;text-decoration:none;color:var(--text);padding:17px;border:1px solid var(--line);background:#0d1420;border-radius:13px;transition:border-color .2s,transform .2s}.tool-card:hover{border-color:#7bf0c577;transform:translateY(-2px)}.tool-icon{width:34px;height:34px;display:grid;place-items:center;border-radius:9px;background:#8ab4ff12;color:var(--blue);font-family:var(--mono);font-size:12px}.tool-card h3{font-size:14px;margin:13px 0 6px}.tool-card p{font-size:12px;color:var(--muted);line-height:1.7;margin:0}.external{display:flex;justify-content:space-between;align-items:center;margin-top:15px;color:var(--mint);font-size:11px}.footer{border-top:1px solid #ffffff12;padding:20px 0 28px;color:var(--muted);font-size:11px;line-height:1.8;display:flex;justify-content:space-between;gap:20px}.toast{position:fixed;bottom:20px;left:20px;background:#132032;border:1px solid var(--line);color:var(--text);padding:11px 15px;border-radius:10px;font-size:12px;opacity:0;transform:translateY(8px);transition:.2s;pointer-events:none}.toast.on{opacity:1;transform:translateY(0)}
-    @media(max-width:720px){.hero{padding-top:48px}.cards{grid-template-columns:repeat(2,minmax(0,1fr))}.tool-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.workbench{padding:16px}.section-head{display:block}.section-head p{margin-top:8px}}
-    @media(max-width:500px){.shell{width:min(100% - 26px,1120px)}.nav-status{font-size:0}.hero h1{font-size:39px}.search-row{flex-direction:column}.primary{width:100%}.cards,.tool-grid{grid-template-columns:1fr 1fr}.footer{display:block}.footer span{display:block;margin-top:7px}}
-    @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
+    :root{--bg:#0b1220;--card:#0f1724;--accent:#4ade80;--text:#e6eef8;--muted:#98a0b0}
+    *{box-sizing:border-box}html,body{min-height:100%;margin:0;font-family:Inter,"Segoe UI",Tahoma,Arial,sans-serif;background:linear-gradient(180deg,#071025 0%,#071726 100%);color:var(--text)}
+    .wrap{max-width:980px;margin:40px auto;padding:20px}.ip-badge{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px;border-radius:12px;background:linear-gradient(90deg,#ffffff05,#ffffff03);box-shadow:0 6px 18px #02061799;border:1px solid #ffffff0a}.ip-left{display:flex;gap:12px;align-items:center}.dot{width:12px;height:12px;flex:none;border-radius:50%;background:var(--accent);box-shadow:0 0 10px #4ade8040}h1{margin:0;font-size:18px}.ip{font-weight:700;font-size:20px;letter-spacing:.6px;direction:ltr;text-align:left}.meta{color:var(--muted);font-size:13px;line-height:1.7}main{margin-top:18px;padding:18px;border-radius:12px;background:var(--card);border:1px solid #ffffff08}h2{font-size:18px}.note{color:var(--muted);font-size:13px;margin-top:10px;line-height:1.8}.center{display:flex;justify-content:center}button{display:inline-block;margin-top:12px;padding:9px 16px;border-radius:10px;background:transparent;color:var(--accent);border:1px solid #4ade8030;cursor:pointer;font:inherit}button:hover{background:#4ade8010}button:disabled{opacity:.55;cursor:wait}.notice{margin-top:14px;padding:11px 13px;border:1px solid #4ade8025;border-radius:9px;color:#b8c6d6;font-size:12px;line-height:1.8}.error{color:#fca5a5}@media(max-width:520px){.ip{font-size:17px}.ip-badge{align-items:flex-start;flex-direction:column}.wrap{margin:20px auto;padding:14px}}
   </style>
 </head>
 <body>
-  <header class="topbar shell">
-    <a class="brand" href="#top" aria-label="مرصد — الصفحة الرئيسية"><span class="brand-mark" aria-hidden="true">⌁</span><span><span class="brand-name">مَرْصَد</span><span class="brand-sub" style="display:block">استخبارات الشبكة المفتوحة</span></span></a>
-    <div class="nav-status"><span class="pulse" aria-hidden="true"></span><span>الأدوات متاحة · فحص سلبي</span></div>
-  </header>
-  <main id="top" class="shell">
-    <section class="hero">
-      <div class="eyebrow"><span aria-hidden="true">◈</span> استطلاع دفاعي من مصادر عامة</div>
-      <h1>افهم سطحك الرقمي،<br><span>بوضوح وأمان.</span></h1>
-      <p>افحص بيانات الشبكة العامة ونظام DNS للعنوان الذي تدخله بنفسك. لا نجمع عنوانك تلقائيًا، ولا نخزّن عمليات البحث أو نرسلها إلى أي جهة.</p>
+  <div class="wrap">
+    <section class="ip-badge" aria-labelledby="page-title">
+      <div class="ip-left"><div class="dot" aria-hidden="true"></div><div><h1 id="page-title">عنوان الـ IP الظاهر للإنترنت</h1><div class="meta">العنوان العام لاتصالك الحالي</div></div></div>
+      <div><div class="ip" id="ip" aria-live="polite">اضغط تحديث لعرض العنوان</div><div class="meta" id="country"></div></div>
     </section>
-    <section class="workbench" aria-labelledby="lookup-title">
-      <div class="workbench-head"><div><h2 id="lookup-title">استعلام عن عنوان IP أو نطاق</h2><p>يعرض معلومات عامة متاحة علنًا فقط.</p></div><span class="passive-tag">● لا فحص للمنافذ</span></div>
-      <form id="lookupForm" autocomplete="off">
-        <div class="search-row"><label class="input-wrap"><span class="symbol" aria-hidden="true">&gt;_</span><input id="target" name="target" type="text" inputmode="url" spellcheck="false" placeholder="مثال: 8.8.8.8 أو example.com" aria-label="عنوان IP أو اسم نطاق" required maxlength="253"></label><button class="primary" id="submit" type="submit">تحليل المعلومات</button></div>
-        <p class="hint">أدخل عنوان IP عامًا أو اسم نطاق فقط. لا تدخل كلمات مرور أو معلومات شخصية.</p>
-      </form>
-      <div class="notice"><strong>استخدمها بمسؤولية:</strong> هذه الأداة لاستطلاع الأصول التي تملكها أو لديك إذن بفحصها. الاستعلامات تقتصر على بيانات IP العامة وسجلات DNS.</div>
-      <section id="results" class="results" aria-live="polite" aria-label="نتائج الاستعلام"></section>
-    </section>
-    <section class="tools" aria-labelledby="tools-title">
-      <div class="section-head"><h2 id="tools-title">مصادر الاستطلاع المفتوحة</h2><p>تفتح هذه الخدمات في تبويب جديد؛ راجع سياسات الخصوصية الخاصة بها.</p></div>
-      <div class="tool-grid" id="toolGrid"></div>
-    </section>
-  </main>
-  <footer class="footer shell"><span>مرصد — أدوات معلومات عامة للاستخدام الدفاعي.</span><span>لا يجري الموقع مسحًا نشطًا أو استغلالًا أو تتبّعًا للزوار.</span></footer>
-  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <main>
+      <h2>شرح سريع</h2>
+      <p>تعرض الصفحة عنوان IP العام الذي يظهر للخدمات الخارجية، مع معلومات جغرافية تقريبية عند توفرها. لا تغيّر الصفحة إعدادات اتصالك.</p>
+      <p class="note">إذا كنت تستخدم VPN أو Proxy، فقد يظهر عنوان خادم الخروج بدلًا من عنوان اتصالك المعتاد. قد تكون بيانات الموقع التقريبية غير دقيقة.</p>
+      <div class="notice">يتم جلب المعلومات عند ضغطك على الزر من خدمتي ipify وipapi.co. لا يرسل هذا الموقع بياناتك إلى تيليغرام ولا يحتفظ بسجل للطلبات.</div>
+      <div class="center"><button id="refresh" type="button">تحديث معلومات IP</button></div>
+    </main>
+  </div>
   <script>
-    const $ = (id) => document.getElementById(id);
-    const tools = [
-      {tag:'DNS',title:'سجلات DNS',description:'استعلام عن سجلات النطاق العامة عبر DNS over HTTPS.',url:'https://dns.google'},
-      {tag:'CT',title:'شفافية الشهادات',description:'استكشف شهادات TLS المنشورة علنًا للنطاق.',url:'https://crt.sh/'},
-      {tag:'VT',title:'VirusTotal',description:'تحقق من سمعة عنوان أو نطاق ضمن تقارير المجتمع.',url:'https://www.virustotal.com/gui/home/search'},
-      {tag:'RDAP',title:'بيانات التسجيل',description:'ابحث عن بيانات تسجيل النطاق عبر قواعد RDAP العامة.',url:'https://lookup.icann.org/'},
-      {tag:'URL',title:'urlscan.io',description:'راجع عمليات مسح عامة سابقة لموقع ويب.',url:'https://urlscan.io/'},
-      {tag:'CVE',title:'قاعدة الثغرات',description:'ابحث في قاعدة بيانات الثغرات الوطنية NVD.',url:'https://nvd.nist.gov/vuln/search'}
-    ];
-    const grid=$('toolGrid');
-    for(const tool of tools){
-      const card=document.createElement('a');card.className='tool-card';card.href=tool.url;card.target='_blank';card.rel='noopener noreferrer';
-      const icon=document.createElement('span');icon.className='tool-icon';icon.textContent=tool.tag;
-      const title=document.createElement('h3');title.textContent=tool.title;
-      const desc=document.createElement('p');desc.textContent=tool.description;
-      const ext=document.createElement('div');ext.className='external';ext.innerHTML='<span>فتح المصدر</span><span aria-hidden="true">↗</span>';
-      card.append(icon,title,desc,ext);grid.append(card);
+    const ipElement=document.getElementById('ip');
+    const countryElement=document.getElementById('country');
+    const refreshButton=document.getElementById('refresh');
+    async function fetchIP(){
+      refreshButton.disabled=true;
+      ipElement.textContent='جارٍ التحميل…';
+      countryElement.textContent='';
+      countryElement.classList.remove('error');
+      try{
+        const response=await fetch('https://api.ipify.org?format=json',{cache:'no-store',signal:AbortSignal.timeout(10000)});
+        if(!response.ok)throw new Error('تعذر جلب عنوان IP. حاول مجددًا.');
+        const result=await response.json();
+        if(!result.ip)throw new Error('لم تُرجع الخدمة عنوان IP.');
+        ipElement.textContent=result.ip;
+        countryElement.textContent='جارٍ جلب معلومات البلد التقريبية…';
+        try{
+          const details=await fetch('https://ipapi.co/'+encodeURIComponent(result.ip)+'/json/',{cache:'no-store',signal:AbortSignal.timeout(8000)});
+          if(details.ok){const data=await details.json();countryElement.textContent=data.country_name?'البلد التقريبي: '+data.country_name+(data.city?' · '+data.city:''):'';}
+          else countryElement.textContent='';
+        }catch{countryElement.textContent='تعذر جلب الموقع التقريبي؛ عنوان IP ظاهر أعلاه.';}
+      }catch(error){ipElement.textContent='تعذر جلب عنوان IP';countryElement.textContent=error.message||'تحقق من اتصالك بالإنترنت وحاول مرة أخرى.';countryElement.classList.add('error');}
+      finally{refreshButton.disabled=false;}
     }
-    function isIPv4(value){const parts=value.split('.');return parts.length===4&&parts.every(x=>/^\d{1,3}$/.test(x)&&Number(x)<=255)}
-    function isIPv6(value){return value.includes(':')&&/^[0-9a-f:]+$/i.test(value)&&value.length<=45}
-    function normalizeDomain(raw){let value=raw.trim().replace(/^https?:\/\//i,'').split(/[/?#]/)[0].replace(/:\d+$/,'').replace(/\.$/,'').toLowerCase();if(value.length>253||!value.includes('.')||!value.split('.').every(part=>part.length>0&&part.length<=63&&/^[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/i.test(part)))return null;return value}
-    function addCard(parent,label,value,code=false,small=false){const card=document.createElement('div');card.className='data-card';const l=document.createElement('div');l.className='label';l.textContent=label;const v=document.createElement('div');v.className='value'+(code?' code':'')+(small?' small':'');v.textContent=value||'غير متاح';card.append(l,v);parent.append(card)}
-    function renderError(message){const box=document.createElement('div');box.className='error';box.textContent=message;$('results').replaceChildren(box);$('results').classList.add('show')}
-    function renderHeading(query,subtitle){const res=$('results');res.replaceChildren();const head=document.createElement('div');head.className='result-title';const h=document.createElement('h3');h.textContent='نتائج الاستعلام: '+query;const s=document.createElement('span');s.textContent=subtitle;head.append(h,s);res.append(head);return res}
-    async function lookupIP(ip){const res=renderHeading(ip,'بيانات عامة');const cards=document.createElement('div');cards.className='cards';addCard(cards,'عنوان IP',ip,true);addCard(cards,'الدولة / الرمز','جارٍ الاستعلام…');res.append(cards);try{const response=await fetch('https://ipapi.co/'+encodeURIComponent(ip)+'/json/',{headers:{Accept:'application/json'},signal:AbortSignal.timeout(9000),cache:'no-store'});if(!response.ok)throw new Error('تعذر الحصول على بيانات الموقع الجغرافي ('+response.status+').');const data=await response.json();if(data.error)throw new Error(data.reason||'تعذر الاستعلام عن هذا العنوان.');cards.replaceChildren();addCard(cards,'عنوان IP',data.ip||ip,true);addCard(cards,'الدولة',data.country_name?data.country_name+(data.country?' ('+data.country+')':''):'غير متاح');addCard(cards,'المنطقة',data.region||'غير متاح');addCard(cards,'المدينة',data.city||'غير متاح');addCard(cards,'مزود الشبكة / ASN',data.org||'غير متاح',false,true);addCard(cards,'المنطقة الزمنية',data.timezone||'غير متاح',false,true);const note=document.createElement('p');note.className='hint';note.textContent='الموقع الجغرافي تقريبي ويقدّمه مزود خارجي (ipapi.co)، وقد لا يكون دقيقًا. لم يتم إرسال عنوان زائر الموقع تلقائيًا.';res.append(note)}catch(error){cards.replaceChildren();addCard(cards,'عنوان IP',ip,true);const err=document.createElement('div');err.className='error';err.style.gridColumn='1/-1';err.textContent=error.name==='TimeoutError'?'انتهت مهلة الخدمة. حاول مجددًا لاحقًا.':error.message;cards.append(err)}}
-    async function lookupDomain(domain){const res=renderHeading(domain,'سجلات DNS العامة');const cards=document.createElement('div');cards.className='cards';res.append(cards);const types=['A','AAAA','MX','NS','TXT'];const responses=await Promise.all(types.map(async type=>{try{const u='https://cloudflare-dns.com/dns-query?name='+encodeURIComponent(domain)+'&type='+type;const r=await fetch(u,{headers:{Accept:'application/dns-json'},signal:AbortSignal.timeout(8000)});if(!r.ok)throw new Error('تعذر استعلام '+type);const d=await r.json();return[type,d.Answer||[]]}catch(e){return[type,null]}}));for(const[type,answers]of responses){let values;if(answers===null)values='فشل الاتصال بمصدر DNS';else if(!answers.length)values='لا توجد سجلات ظاهرة';else values=answers.map(x=>x.data).join(' · ');addCard(cards,'سجل '+type,values,false,true)}const note=document.createElement('p');note.className='hint';note.textContent='النتائج من محلل DNS العام لدى Cloudflare. لا يجري الموقع فحص منافذ أو اتصالًا مباشرًا بخوادم النطاق.';res.append(note)}
-    $('lookupForm').addEventListener('submit',async event=>{event.preventDefault();const raw=$('target').value.trim();const button=$('submit');if(!raw)return;button.disabled=true;button.textContent='جارٍ التحليل…';try{if(isIPv4(raw)||isIPv6(raw)){await lookupIP(raw)}else{const domain=normalizeDomain(raw);if(!domain){renderError('صيغة غير صالحة. أدخل عنوان IP أو اسم نطاق عام مثل example.com.');return}await lookupDomain(domain)}}finally{button.disabled=false;button.textContent='تحليل المعلومات'}});
+    refreshButton.addEventListener('click',fetchIP);
   </script>
 </body>
 </html>
